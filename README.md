@@ -8,6 +8,7 @@ Backend implements the RAG (Retrieval-Augmented Generation) pattern: retrieving 
 
 #### Upload Flow
 
+```
 File uploaded via POST /api/documents/upload
       **↓**
 Apache Tika extracts raw text (PDF, DOCX, PPTX, TXT)
@@ -19,9 +20,11 @@ Each chunk is embedded (converted into a vector) via Gemini's embedding model
 Chunks + vectors are stored in an in-memory vector store
       **↓**
 File metadata (name, upload time) is saved to PostgreSQL
+```
 
 #### Query Flow
 
+```
 Question sent via POST /api/documents/{id}/query
       **↓**
 Question is embedded into a vector
@@ -33,6 +36,7 @@ Chunks are joined into a "context" block
 A prompt (instructions + context + question) is sent to Gemini's chat model
       **↓**
 Model generates a grounded answer, returned as JSON
+```
 
 ### Tech Stack
 
@@ -72,8 +76,6 @@ Model generates a grounded answer, returned as JSON
 </table>
 
 ### Project Structure
-
-## Project Structure
 
 ```
 seek-backend
@@ -130,11 +132,11 @@ seek-backend
   </tr>
   <tr>
     <td>QueryRequest.java</td>
-    <td>.</td>
+    <td>Java record defining the shape of the incoming JSON body on query: { "query": "..." }.</td>
   </tr>
   <tr>
     <td>QueryResponse.java</td>
-    <td>.</td>
+    <td>Java record defining the shape of the outgoing JSON response: { "answer": "..." }.</td>
   </tr>
   <tr>
     <td>DocumentController.java</td>
@@ -186,10 +188,12 @@ Spring AI provides vendor-agnostic abstractions (EmbeddingModel, ChatModel, Vect
 
 ### Local Setup
 
+```
 • Java 17
 • Maven
 • PostgreSQL running locally
 • Google Gemini API key
+```
 
 #### Steps:
 
